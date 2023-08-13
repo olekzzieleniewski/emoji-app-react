@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import ReactDOM from "react-dom"
 
-//aacdcd27a28f68139f9e37b83dadc481518bbf83
 function Container() {
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
+  function catchError() {
+    let renderedData
+
+    try {
+      renderedData = data.map((e, i) => (
+        <div className="card" key={e.slug}>
+          <p>{e.character}</p>
+          <p>{e.unicodeName}</p>
+        </div>
+      ))
+    } catch (error) {
+      renderedData = <p className="error">❌Emoji not found. Try again...❌</p>
+    }
+    return <div className="result">{renderedData}</div>
+  }
 
   useEffect(() => {
     axios
@@ -56,14 +69,7 @@ function Container() {
           </button>
         </div>
       </center>
-      <div className="result">
-        {data.map((e, i) => (
-          <div className="card" key={e.slug}>
-            <p>{e.character}</p>
-            <p>{e.unicodeName}</p>
-          </div>
-        ))}
-      </div>
+      <div className="result">{catchError()}</div>
     </div>
   )
 }

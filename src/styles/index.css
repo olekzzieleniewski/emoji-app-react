@@ -72,3 +72,7 @@ p {
   margin: 20px;
   border-radius: 10px;
 }
+.error {
+  text-align: center;
+  font-size: 50px;
+}
